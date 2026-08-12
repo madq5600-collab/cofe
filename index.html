@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الموسوعة الشاملة للباريستا | إشراف فرح ☕</title>
+    <style>
+        :root {
+            --bg-dark: #090b0e;
+            --card-bg: #131722;
+            --accent-gold: #e5ba73;
+            --text-light: #f3f4f6;
+            --text-muted: #9ca3af;
+            --border-color: #262c3c;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            height: 100%;
+        }
+
+        /* 1. شاشة الترحيب */
+        #welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #090b0e;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        #welcome-text {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--accent-gold);
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .start-btn {
+            background-color: transparent;
+            color: var(--accent-gold);
+            border: 2px solid var(--accent-gold);
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+        }
+
+        /* 2. الهيكل الرئيسي */
+        #main-content {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        header h1 {
+            color: var(--accent-gold);
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background-color: var(--card-bg);
+            color: var(--text-light);
+            border: 1px solid var(--border-color);
+            padding: 12px 25px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .tab-btn.active {
+            background-color: var(--accent-gold);
+            color: var(--bg-dark);
+        }
+
+        .section-panel {
+            display: none;
+        }
+
+        .section-panel.active {
+            display: block;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .recipe-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .recipe-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .recipe-body {
+            padding: 20px;
+        }
+
+        .recipe-body h3 {
+            color: var(--accent-gold);
+            margin: 0 0 15px 0;
+        }
+
+        .spec-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .spec-table td {
+            padding: 6px 0;
+            border-bottom: 1px dashed #242b3d;
+        }
+
+        .spec-table td:last-child {
+            text-align: left;
+            color: var(--accent-gold);
+        }
+
+        .article-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-right: 5px solid var(--accent-gold);
+        }
+
+        .article-steps {
+            background-color: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. شاشة الترحيب -->
+    <div id="welcome-screen">
+        <div id="welcome-text">أهلاً بك في عالم الباريستا<br><span style="font-size: 1.5rem; color: #fff;">WELCOME TO BARISTA WORLD</span></div>
+        <button class="start-btn" onclick="document.getElementById('welcome-screen').style.display='none'">ابدأ الدليل | START</button>
+    </div>
+
+    <!-- 2. محتوى الموقع المباشر -->
+    <div id="main-content">
+        <header>
+            <h1>BARISTA ENCYCLOPEDIA</h1>
+            <p style="color: var(--text-muted)">الموسوعة القياسية الشاملة لإعداد المشروبات وتدريب الباريستا | فرح</p>
+        </header>
+
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="switchTab('ice-coffee', this)">Ice Coffee (المشروبات الباردة)</button>
+            <button class="tab-btn" onclick="switchTab('hot-coffee', this)">Hot Coffee (المشروبات الساخنة)</button>
+            <button class="tab-btn" onclick="switchTab('specialty', this)">Specialty Coffee (التعليم والمقالات)</button>
+        </div>
+
+        <!-- الباردة -->
+        <div id="ice-coffee" class="section-panel active">
+            <div class="grid-container">
+                <div class="recipe-card">
+                    <img src="https://unsplash.com" class="recipe-img">
+                    <div class="recipe-body">
+                        <h3>Iced Spanish Latte | سبانش لاتيه</h3>
+                        <table class="spec-table">
+                            <tr><td>الحجم المعتمد</td><td>12 Oz / 350 ml</td></tr>
+                            <tr><td>جرعة الإسبريسو</td><td>Double Shot (36g Yield)</td></tr>
+                            <tr><td>الحليب المكثف المحلى</td><td>20 ml</td></tr>
+                            <tr><td>الحليب الطازج</td><td>120 ml كامل الدسم</td></tr>
+                            <tr><td>كمية الثلج</td><td>كوب ممتلئ مكعبات صلبة</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="recipe-card">
+                    <img src="https://unsplash.com" class="recipe-img">
+                    <div class="recipe-body">
+                        <h3>Iced White Mocha | وايت موكا بارد</h3>
+                        <table class="spec-table">
+                            <tr><td>الحجم المعتمد</td><td>12 Oz</td></tr>
+                            <tr><td>جرعة الإسبريسو</td><td>Double Shot</td></tr>
+                            <tr><td>صوص الشوكولاتة البيضاء</td><td>30 ml</td></tr>
+                            <tr><td>الحليب الطازج</td><td>110 ml</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- الساخنة -->
+        <div id="hot-coffee" class="section-panel">
+            <div class="grid-container">
+                <div class="recipe-card">
+                    <img src="https://unsplash.com" class="recipe-img">
+                    <div class="recipe-body">
+                        <h3>Flat White | فلات وايت</h3>
+                        <table class="spec-table">
+                            <tr><td>الكوب المعتمد</td><td>6 Oz / 180 ml سيراميك</td></tr>
+                            <tr><td>نوع الاستخلاص</td><td>Double Shot Ristretto (25g)</td></tr>
+                            <tr><td>حرارة التبخير</td><td>60°C - 65°C</td></tr>
+                            <tr><td>سماكة الفوم</td><td>0.5 سم فوم ناعم جداً</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- المقالات والتعليم -->
+        <div id="specialty" class="section-panel">
+            <div class="article-card">
+                <h3>أداة الترشيح التقطيري V60</h3>
+                <div class="article-content">
+                    تعتبر أداة الـ V60 الأداة الأبرز لإبراز الإيحاءات الفاكهية والحمضية النظيفة في البن المختص.
+                    <div class="article-steps">
+                        <strong>المعايير الذهبية (V60 Recipe):</strong><br>
+                        • كمية البن: 20 غرام (طحنة متوسطة الخشونة).<br>
+                        • كمية الماء الكلية: 300 مل.<br>
+                        • درجة حرارة الماء: 91°C إلى 93°C.
+                    </div>
+                </div>
+                <img src="https://unsplash.com" class="recipe-img" style="border-radius: 8px; margin-top: 15px;">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tabId, button) {
+            var panels = document.querySelectorAll('.section-panel');
+            panels.forEach(function(panel) { panel.classList.remove('active'); });
+
+            var buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(function(btn) { btn.classList.remove('active'); });
+
+            document.getElementById(tabId).classList.add('active');
+            button.classList.add('active');
+        }
+    </script>
+</body>
+</html>
