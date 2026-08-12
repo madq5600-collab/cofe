@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الموسوعة الشاملة للباريستا | إشراف فرح ☕</title>
+    <style>
+        :root {
+            --bg-dark: #090b0e;
+            --card-bg: #131722;
+            --accent-gold: #e5ba73;
+            --text-light: #f3f4f6;
+            --text-muted: #9ca3af;
+            --border-color: #262c3c;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        /* 1. شاشة الترحيب الذكية والمضمونة */
+        #welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #11141d 0%, #050609 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: transform 0.6s ease-in-out;
+        }
+
+        #welcome-text {
+            font-size: 2.8rem;
+            font-weight: bold;
+            color: var(--accent-gold);
+            margin-bottom: 40px;
+            min-height: 80px;
+            text-align: center;
+            text-shadow: 0 0 25px rgba(229, 186, 115, 0.2);
+            transition: opacity 0.4s ease-in-out;
+        }
+
+        .start-btn {
+            background-color: transparent;
+            color: var(--accent-gold);
+            border: 2px solid var(--accent-gold);
+            padding: 18px 50px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .start-btn:hover {
+            background-color: var(--accent-gold);
+            color: var(--bg-dark);
+            box-shadow: 0 0 30px rgba(229, 186, 115, 0.4);
+            transform: scale(1.05);
+        }
+
+        /* 2. الهيكل الرئيسي للموقع */
+        #main-content {
+            padding: 30px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: none; 
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 30px;
+        }
+
+        header h1 {
+            color: var(--accent-gold);
+            margin: 0 0 10px 0;
+            font-size: 2.8rem;
+            letter-spacing: 1px;
+        }
+
+        /* أزرار لوحة التحكم والأقسام */
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .tab-btn {
+            background-color: var(--card-bg);
+            color: var(--text-light);
+            border: 1px solid var(--border-color);
+            padding: 15px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.05rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active, .tab-btn:hover {
+            background-color: var(--accent-gold);
+            color: var(--bg-dark);
+            border-color: var(--accent-gold);
+            box-shadow: 0 4px 15px rgba(229, 186, 115, 0.2);
+        }
+
+        /* حاويات الأقسام التفاعلية */
+        .section-panel {
+            display: none;
+        }
+
+        .section-panel.active {
+            display: block;
+        }
+
+        /* تصميم كروت الريسبي والمشروبات */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 30px;
+        }
+
+        .recipe-card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            transition: transform 0.3s ease;
+        }
+
+        .recipe-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .recipe-img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+        }
+
+        .recipe-body {
+            padding: 25px;
+        }
+
+        .recipe-body h3 {
+            color: var(--accent-gold);
+            margin: 0 0 15px 0;
+            font-size: 1.4rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .spec-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.95rem;
+        }
+
+        .spec-table td {
+            padding: 8px 0;
+            border-bottom: 1px dashed #242b3d;
+        }
+
+        .spec-table td:last-child {
+            text-align: left;
+            color: var(--accent-gold);
+            font-weight: bold;
+        }
+
+        .steps-title {
+            font-weight: bold;
+            margin-top: 20px;
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        .steps-list {
+            padding-right: 20px;
+            margin: 8px 0 0 0;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* تصميم قسم المقالات التعليمية */
+        .article-card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            border-right: 5px solid var(--accent-gold);
+            padding: 30px;
+            margin-bottom: 35px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        }
+
+        .article-card h3 {
+            color: var(--accent-gold);
+            margin-top: 0;
+            font-size: 1.6rem;
+        }
+
+        .article-content {
+            color: var(--text-light);
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        .article-steps {
+            background-color: rgba(0,0,0,0.3);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid var(--border-color);
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. شاشة الترحيب الدورية (تتناوب تلقائياً بين العربي والإنجليزي) -->
+    <div id="welcome-screen">
+        <div id="welcome-text">أهلاً بك في دليل الباريستا المحترف</div>
+        <button class="start-btn" onclick="enterSite()">ابدأ الدليل | START</button>
+    </div>
+
+    <!-- 2. محتوى الموقع ومهرجان الوصفات -->
+    <div id="main-content">
+        <header>
+            <h1>BARISTA ENCYCLOPEDIA</h1>
+            <p style="color: var(--text-muted); font-size: 1.2rem;">الموسوعة الشاملة والمعايير القياسية العالمية لإعداد المشروبات وتدريب الباريستا | فرح</p>
+        </header>
+
+        <!-- أزرار التنقل الرئيسية والمضمونة برمجياً -->
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="switchTab(event, 'ice-coffee')">Ice Coffee (المشروبات الباردة)</button>
+            <button class="tab-btn" onclick="switchTab(event, 'hot-coffee')">Hot Coffee (المشروبات الساخنة)</button>
+            <button class="tab-btn" onclick="switchTab(event, 'specialty')">Specialty Coffee (التعليم والمقالات)</button>
+        </div>
+
+        <!-- ================= قسم المشروبات الباردة ================= -->
+        <div id="ice-coffee" class="section-panel active">
+            <div class="grid-container">
+                <!-- سبانش لاتيه بارد -->
+                <div class="recipe-card">
+                    <img src="https://unsplash.com" class="recipe-img" alt="Iced Spanish Latte">
+                    <div class="recipe-body">
+                        <h3>Iced Spanish Latte | سبانش لاتيه</h3>
+                        <table class="spec-table">
+                            <tr><td>الحجم المعتمد</td><td>12 Oz / 350 ml</td></tr>
+                            <tr><td>جرعة الإسبريسو</td><td>Double Shot (36g Yield)</td></tr>
+                            <tr><td>الحليب المكثف المحلى</td><td>20 ml</td></tr>
+                            <tr><td>الحليب الطازج</td><td>120 ml كامل الدسم مبرد</td></tr>
+                            <tr><td>كمية الثلج</td><td>كوب ممتلئ مكعبات صلبة</td></tr>
+                        </table>
+                        <div class="steps-title">طريقة التحضير القياسية:</div>
+                        <ol class="steps-list">
+                            <li>صب الحليب المكثف في قاع الكوب الزجاجي.</li>
+                            <li>أضف الحليب البارد وقم بالتحريك الخفيف ليتم الامتزاج الأولي.</li>
+                            <li>املأ الكوب بالثلوج تماماً لضمان برودة وفصل الطبقات.</li>
+                            <li>استخلص الإسبريسو واسكبه بلطف فوق السطح ليعطي شكل الطبقات الرايق.</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- وايت موكا بارد -->
+                <div class="recipe-card">
+                    <img src="https://unsplash.com" class="recipe-img" alt="Iced White Mocha">
+                    <div class="recipe-body">
+                        <h3>Iced White Mocha | وايت موكا بارد</h3>
+                        <table class="spec-table">
+                            <tr><td>الحجم المعتمد</td><td>12 Oz / 350 ml</td></tr>
+                            <tr><td>جرعة الإسبريسو</td><td>Double Shot</td></tr>
+                            <tr><td>صوص الشوكولاتة البيضاء</td><td>30 ml براند فاخر</td></tr>
+                            <tr><td>الحليب الطازج</td><td>110 ml</td></tr>
